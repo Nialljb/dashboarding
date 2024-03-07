@@ -4,7 +4,7 @@ import pandas as pd
 import plotly.express as px
 
 # Load the synthetic data CSV file
-@st.cache_data
+# @st.cache_data
 def load_data():
     data = pd.read_csv("synthetic_data.csv")
     return data
