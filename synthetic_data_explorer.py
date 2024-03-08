@@ -29,14 +29,13 @@ selected_y_axis = st.sidebar.selectbox("Select variable for Y-axis", options=y_a
 
 
 
-# Assuming 'df' is your DataFrame variable name and it's already loaded with data
-# Create a boxplot with 'site' on the x-axis and 'age' on the y-axis
-fig_boxplot = px.box(df, x='site', y='age', color='site',
-                     labels={'site': 'Site', 'age': 'Age'},
-                     title='Age Distribution by Site')
-
-# Display the figure in the Streamlit app
-st.plotly_chart(fig_boxplot)
+# # Assuming 'df' is your DataFrame variable name and it's already loaded with data
+# # Create a boxplot with 'site' on the x-axis and 'age' on the y-axis
+# fig_boxplot = px.box(df, x='site', y='age', color='site',
+#                      labels={'site': 'Site', 'age': 'Age'},
+#                      title='Age Distribution by Site')
+# # Display the figure in the Streamlit app
+# st.plotly_chart(fig_boxplot)
 
 # --- Main Panel ---
 # Display dataframe
@@ -50,6 +49,34 @@ fig_counts_per_site = px.bar(df.groupby('site').size().reset_index(name='counts'
 fig_counts_per_site.update_traces(texttemplate='%{text}', textposition='outside')
 fig_counts_per_site.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
 st.plotly_chart(fig_counts_per_site)
+
+
+
+
+# Assuming 'df' is your DataFrame variable name and it's already loaded with data
+
+# Identify categorical columns in the DataFrame (excluding 'site' since it's used on x-axis)
+categorical_columns = df.select_dtypes(include=['object', 'category']).columns.tolist()
+categorical_columns.remove('site')  # Assuming 'site' should not be in the dropdown
+
+# Create a dropdown for selecting a categorical variable for coloring
+# Set 'sex' as the default selection if it's among the categorical columns
+default_color_value = 'sex' if 'sex' in categorical_columns else categorical_columns[0]
+color_selection = st.selectbox('Select a categorical variable for coloring:', 
+                               options=categorical_columns, 
+                               index=categorical_columns.index(default_color_value))
+
+# Create a boxplot with 'site' on the x-axis, 'age' on the y-axis, and color based on the selected categorical variable
+fig_boxplot = px.box(df, x='site', y='age', color=color_selection,
+                     labels={'site': 'Site', 'age': 'Age', color_selection: color_selection},
+                     title=f'Age Distribution by Site, colored by {color_selection}')
+
+# Display the figure in the Streamlit app
+st.plotly_chart(fig_boxplot)
+
+
+
+
 
 # Scatter plot for variable selection with age as default X-axis
 st.write(f"### Scatter Plot of {selected_y_axis} over Age")
