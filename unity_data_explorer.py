@@ -1,6 +1,8 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-from synthetic_data_explorer import home
+from app.synthetic_data_explorer import home
+from app.synthetic_data_explorer import warehouse
+from app.synthetic_data_explorer import stats
 
 with st.sidebar:
     selected = option_menu(
@@ -12,10 +14,10 @@ with st.sidebar:
 )
     
 if selected == "Home":
-   home()
-    
+    home()
 if selected == "Warehouse":
     st.subheader(f"**You Have selected {selected}**")
-
+    warehouse()
 if selected == "Contact":
     st.subheader(f"**You Have selected {selected}**")
+    stats()
