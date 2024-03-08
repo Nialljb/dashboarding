@@ -2,6 +2,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import numpy as np
 
 # Load the synthetic data CSV file
 # @st.cache_data
@@ -62,7 +63,9 @@ if show_summary_stats:
 
 
 st.write("### Correlation Matrix")
-corr = df.corr()
+# Exclude non-numeric columns before calculating correlation
+numeric_df = df.select_dtypes(include=[np.number])
+corr = numeric_df.corr()
 fig_corr = px.imshow(corr, text_auto=True, aspect="auto", title="Correlation Matrix")
 st.plotly_chart(fig_corr)
 
