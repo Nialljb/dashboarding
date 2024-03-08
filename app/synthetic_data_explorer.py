@@ -42,8 +42,6 @@ def home():
     st.plotly_chart(fig_counts_per_site)
 
 
-
-
     # Assuming 'df' is your DataFrame variable name and it's already loaded with data
 
     # Identify categorical columns in the DataFrame (excluding 'site' since it's used on x-axis)
@@ -64,9 +62,6 @@ def home():
 
     # Display the figure in the Streamlit app
     st.plotly_chart(fig_boxplot)
-
-
-
 
 
     # Scatter plot for variable selection with age as default X-axis
