@@ -18,6 +18,8 @@ if selected == "Home":
 if selected == "Warehouse":
     st.subheader(f"**You Have selected {selected}**")
     warehouse()
-if selected == "Contact":
+if selected == "Inferential Statistics":
     st.subheader(f"**You Have selected {selected}**")
     stats()
+if selected == "Contact Us":
+    st.subheader(f"**You Have selected {selected}**")
