@@ -28,6 +28,16 @@ y_axis_options = df.columns.drop(['subjectID', 'sessionID', 'site', 'sex'])
 selected_y_axis = st.sidebar.selectbox("Select variable for Y-axis", options=y_axis_options, index=y_axis_options.get_loc('TICV'))
 
 
+
+# Assuming 'df' is your DataFrame variable name and it's already loaded with data
+# Create a boxplot with 'site' on the x-axis and 'age' on the y-axis
+fig_boxplot = px.box(df, x='site', y='age', color='site',
+                     labels={'site': 'Site', 'age': 'Age'},
+                     title='Age Distribution by Site')
+
+# Display the figure in the Streamlit app
+st.plotly_chart(fig_boxplot)
+
 # --- Main Panel ---
 # Display dataframe
 st.write("Data Overview:", df)
