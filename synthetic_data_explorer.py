@@ -16,17 +16,17 @@ def home():
     # Title
     st.title("Synthetic Data Exploration")
 
-    # Sidebar filters
-    st.sidebar.header("Filters")
-    unique_sites = df['site'].unique()
-    selected_site = st.sidebar.selectbox("Select Site", options=["All"] + list(unique_sites))
+    # # Sidebar filters
+    # st.sidebar.header("Filters")
+    # unique_sites = df['site'].unique()
+    # selected_site = st.sidebar.selectbox("Select Site", options=["All"] + list(unique_sites))
 
-    if selected_site != "All":
-        df = df[df['site'] == selected_site]
+    # if selected_site != "All":
+    #     df = df[df['site'] == selected_site]
 
-    # Sidebar for selecting y-axis variable
-    y_axis_options = df.columns.drop(['subjectID', 'sessionID', 'site', 'sex'])
-    selected_y_axis = st.sidebar.selectbox("Select variable for Y-axis", options=y_axis_options, index=y_axis_options.get_loc('TICV'))
+    # # Sidebar for selecting y-axis variable
+    # y_axis_options = df.columns.drop(['subjectID', 'sessionID', 'site', 'sex'])
+    # selected_y_axis = st.sidebar.selectbox("Select variable for Y-axis", options=y_axis_options, index=y_axis_options.get_loc('TICV'))
 
     # --- Main Panel ---
     # Display dataframe
