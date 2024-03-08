@@ -1,7 +1,6 @@
 import streamlit as st
-import streamlit_option_menu
 from streamlit_option_menu import option_menu
-from app.synthetic_data_explorer import home
+from synthetic_data_explorer import home
 
 with st.sidebar:
     selected = option_menu(

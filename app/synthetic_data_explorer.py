@@ -16,23 +16,9 @@ def home():
     # Title
     st.title("Synthetic Data Exploration")
 
-    # # Sidebar filters
-    # st.sidebar.header("Filters")
-    # unique_sites = df['site'].unique()
-    # selected_site = st.sidebar.selectbox("Select Site", options=["All"] + list(unique_sites))
-
-    # if selected_site != "All":
-    #     df = df[df['site'] == selected_site]
-
-    # # Sidebar for selecting y-axis variable
-    # y_axis_options = df.columns.drop(['subjectID', 'sessionID', 'site', 'sex'])
-    # selected_y_axis = st.sidebar.selectbox("Select variable for Y-axis", options=y_axis_options, index=y_axis_options.get_loc('TICV'))
-
     # --- Main Panel ---
     # Display dataframe
     st.write("Data Overview:", df)
-    model_options = st.sidebar.selectbox("Select Model for Best Fit", ["None", "Linear (OLS)", "Polynomial", "GLM"])
-    show_summary_stats = st.sidebar.checkbox("Show Summary Statistics", False)
 
     # Visualization for counts of observations per site
     st.write("### Number of scanning sessions per Site")
@@ -42,8 +28,55 @@ def home():
     st.plotly_chart(fig_counts_per_site)
 
 
-    # Assuming 'df' is your DataFrame variable name and it's already loaded with data
+def warehouse():
 
+    # Load the synthetic data CSV file
+    # @st.cache_data
+    def load_data():
+        data = pd.read_csv("synthetic_data.csv")
+        return data
+
+    df = load_data()
+
+    # Title
+    st.title("Synthetic Data Exploration")
+
+    # --- Main Panel ---
+    # Display dataframe
+    st.write("Data Overview:", df)
+    
+
+
+def stats():
+
+    # Load the synthetic data CSV file
+    # @st.cache_data
+    def load_data():
+        data = pd.read_csv("synthetic_data.csv")
+        return data
+
+    df = load_data()
+
+    model_options = st.sidebar.selectbox("Select Model for Best Fit", ["None", "Linear (OLS)", "Polynomial", "GLM"])
+    show_summary_stats = st.sidebar.checkbox("Show Summary Statistics", False)
+
+    # Sidebar filters
+    st.sidebar.header("Filters")
+    unique_sites = df['site'].unique()
+    selected_site = st.sidebar.selectbox("Select Site", options=["All"] + list(unique_sites))
+
+    if selected_site != "All":
+        df = df[df['site'] == selected_site]
+
+    # Sidebar for selecting y-axis variable
+    y_axis_options = df.columns.drop(['subjectID', 'sessionID', 'site', 'sex'])
+    selected_y_axis = st.sidebar.selectbox("Select variable for Y-axis", options=y_axis_options, index=y_axis_options.get_loc('TICV'))
+
+
+    # Title
+    st.title("Synthetic Data Exploration")
+
+    # --- Main Panel ---
     # Identify categorical columns in the DataFrame (excluding 'site' since it's used on x-axis)
     categorical_columns = df.select_dtypes(include=['object', 'category']).columns.tolist()
     categorical_columns.remove('site')  # Assuming 'site' should not be in the dropdown
@@ -84,12 +117,9 @@ def home():
     if show_summary_stats:
         st.write(df[selected_y_axis].describe())
 
-
     st.write("### Correlation Matrix")
     # Exclude non-numeric columns before calculating correlation
     numeric_df = df.select_dtypes(include=[np.number])
     corr = numeric_df.corr()
     fig_corr = px.imshow(corr, text_auto=True, aspect="auto", title="Correlation Matrix")
     st.plotly_chart(fig_corr)
-
-
